@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      if (offset > 0) {
+      if (offset > 100) {
         setIsSticky(true);
       } else {
         setIsSticky(false);
