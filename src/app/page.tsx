@@ -1,5 +1,6 @@
 "use client";
 
+import HomeCard from "@/components/HomeCard";
 import NavBar from "@/components/NavBar";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -96,7 +97,28 @@ export default function Home() {
       </div>
 
       {/* Showcase */}
-      <div></div>
+      <div>
+        <h1 className="pt-8 text-4xl font-kiona text-white text-center mt-20">
+          The next Experience for you
+        </h1>
+        <div className="flex flex-row p-16 space-x-8">
+          <HomeCard
+            src="/img/menu_1.jpg"
+            alt="Select Your Car"
+            text="Select Your Car"
+          />
+          <HomeCard
+            src="/img/menu_2.jpg"
+            alt="Rental Car Provider"
+            text="Our Trusted Partner"
+          />
+          <HomeCard
+            src="/img/menu_3.jpg"
+            alt="Reservation"
+            text="Reservation"
+          />
+        </div>
+      </div>
     </main>
   );
 }
