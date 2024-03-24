@@ -1,5 +1,6 @@
 "use client";
 
+import NavBar from "@/components/NavBar";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -28,43 +29,7 @@ export default function Home() {
 
   return (
     <main className="h-[200vh]">
-      <div className="py-12  sticky top-[-3rem] z-50">
-        <div
-          className={`flex flex-row  justify-between items-center px-12 h-20 ${
-            isSticky
-              ? "top-0 bg-white transition duration-300 ease-in-out shadow-xl"
-              : "top-[-2rem] transition duration-300 ease-in-out"
-          }`}
-        >
-          <Image
-            alt="logo"
-            src={`${
-              isSticky
-                ? "/img/yenkor_logo_black.png"
-                : "/img/yenkor_logo_trans.png"
-            }`}
-            width={255}
-            height={55}
-            className="z-50"
-          />
-          <div className="flex flex-row space-x-4">
-            <button
-              className="bg-[#4E5861] px-6 py-2 rounded-md font-bold text-white shadow-lg
-              hover:bg-[#2D2D2D] transition duration-300 ease-in-out
-              active:bg-[#2D2D2D] active:scale-95 active:shadow-inner"
-            >
-              Get Start
-            </button>
-            <button
-              className="bg-white px-6 py-2 rounded-md font-bold shadow-lg
-              hover:bg-[#F2F2F2] transition duration-300 ease-in-out
-              active:bg-[#F2F2F2] active:scale-95 active:shadow-inner"
-            >
-              Sign in
-            </button>
-          </div>
-        </div>
-      </div>
+      <NavBar stickyState={isSticky} />
 
       {/* Background */}
       <div className="overflow-hidden">
@@ -129,6 +94,9 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Showcase */}
+      <div></div>
     </main>
   );
 }
