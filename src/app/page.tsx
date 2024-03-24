@@ -57,8 +57,8 @@ export default function Home() {
           <Image
             alt="logo"
             src="/img/explore_icon.png"
-            width={73}
-            height={70}
+            width={50}
+            height={50}
           />
           <div className="flex flex-col">
             <h1 className="text-white text-lg">Explore the </h1>
