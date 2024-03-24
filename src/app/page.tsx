@@ -52,7 +52,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-row p-12 justify-between items-center pt-80 z-50">
+      <div className="flex flex-row p-12 justify-between items-center pt-[22rem] z-50">
         <div className="flex flex-row pl-5 space-x-5 items-center z-50">
           <Image
             alt="logo"
