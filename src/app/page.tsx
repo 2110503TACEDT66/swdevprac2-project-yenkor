@@ -27,15 +27,21 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="h-[200vh]">
+    <main className="h-[200vh] overflow-hidden">
       {/* Background */}
-      <Image
-        className="absolute top-0 right-64 z-0 h-[100vh]"
-        alt="background"
-        src="/img/home_background.png"
-        width={1000}
-        height={1200}
-      />
+      <div className="relative">
+        <Image
+          className={`absolute z-0 h-[100vh] ${
+            isSticky || isFirst
+              ? "top-[-100vh] right-[-16rem] transition-[top,right] duration-1000 ease-in-out"
+              : "top-0 right-64 transition-[top,right] duration-1000 ease-in-out"
+          }`}
+          alt="background"
+          src="/img/home_background.png"
+          width={1000}
+          height={1200}
+        />
+      </div>
 
       <div className="py-12  sticky top-[-3rem] ">
         <div
