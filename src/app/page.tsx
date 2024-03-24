@@ -3,15 +3,13 @@ import Image from "next/image";
 export default function Home() {
   return (
     <main className="w-[100vw] h-[100vh]">
-      <div className="absolute top-0 right-64 w-fit h-fit z-0">
-        <Image
-          className=""
-          alt="background"
-          src="/img/home_background.png"
-          width={1000}
-          height={1200}
-        />
-      </div>
+      <Image
+        className="absolute top-0 right-64 z-0 h-[100vh]"
+        alt="background"
+        src="/img/home_background.png"
+        width={1000}
+        height={1200}
+      />
       <div className="flex flex-row p-12 justify-between items-center">
         <Image
           alt="logo"
