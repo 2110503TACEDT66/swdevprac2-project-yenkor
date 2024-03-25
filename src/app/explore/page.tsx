@@ -4,9 +4,12 @@ import ExploreCard from "@/components/ExploreCard";
 import NavBar from "@/components/NavBar";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const page = () => {
+  const router = useRouter();
   const [isSticky, setIsSticky] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +26,15 @@ const page = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const mockData = [
+    {
+      id: 1,
+      title: "Lamborghini",
+      description: "Yenkor Rental Car | Bangkok 10400 | 0987654321",
+    },
+  ];
+
   return (
     <main>
       <NavBar stickyState={isSticky} showSignIn={true} />
@@ -35,9 +47,14 @@ const page = () => {
             className="w-1/4 h-12 rounded-2xl bg-[#1E1E1E] text-white"
           />
         </div>
-        <div className=" w-[93%] h-2 flex flex-row flex-wrap">
-          <ExploreCard />
-        </div>
+        {mockData.map((data) => (
+          <Link
+            className="w-[93%] h-2 flex flex-row flex-wrap"
+            href={`/reserve/${data.id}`}
+          >
+            <ExploreCard key={data.id} />
+          </Link>
+        ))}
       </div>
     </main>
   );
