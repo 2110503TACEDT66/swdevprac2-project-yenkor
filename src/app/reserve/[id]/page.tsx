@@ -16,6 +16,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
 
 const page = ({ params }: { params: { id: string } }) => {
   const [isSticky, setIsSticky] = useState(false);
@@ -42,21 +51,18 @@ const page = ({ params }: { params: { id: string } }) => {
   });
 
   const formSchema = z.object({
-    email: z.string().min(2, {
-      message: "email must be at least 2 characters.",
+    rentDate: z.date({
+      required_error: "Rent date is required",
     }),
-    password: z.string().min(2, {
-      message: "password must be at least 2 characters.",
+    returnDate: z.date({
+      required_error: "Return date is required",
     }),
   });
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: {},
   });
 
   // 2. Define a submit handler.
@@ -116,38 +122,99 @@ const page = ({ params }: { params: { id: string } }) => {
                   >
                     <FormField
                       control={form.control}
-                      name="email"
+                      name="rentDate"
                       render={({ field }) => (
-                        <FormItem>
+                        <FormItem className="flex flex-col">
                           <FormLabel className="text-white font-kiona text-lg">
-                            Email
+                            Rent Date
                           </FormLabel>
-                          <FormControl>
-                            <Input
-                              className="bg-[#222529] text-white"
-                              placeholder="Example@domain.com"
-                              {...field}
-                            />
-                          </FormControl>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant={"outline"}
+                                  className={cn(
+                                    "w-[170%] text-white text-lg h-16 pl-3 text-left font-normal bg-[#222529]",
+                                    !field.value && "text-muted-foreground"
+                                  )}
+                                >
+                                  {field.value ? (
+                                    format(field.value, "PPP")
+                                  ) : (
+                                    <span className="text-white">
+                                      Pick a rent date
+                                    </span>
+                                  )}
+                                  <CalendarIcon
+                                    className="ml-auto h-4 w-4 opacity-50 "
+                                    color="white"
+                                  />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              className="w-auto p-0 bg-white"
+                              align="start"
+                            >
+                              <Calendar
+                                mode="single"
+                                selected={field.value}
+                                onSelect={field.onChange}
+                                disabled={(date) => date < new Date()}
+                                initialFocus
+                              />
+                            </PopoverContent>
+                          </Popover>
                           <FormMessage className="text-rose-600" />
                         </FormItem>
                       )}
                     />
+
                     <FormField
                       control={form.control}
-                      name="password"
+                      name="returnDate"
                       render={({ field }) => (
-                        <FormItem>
+                        <FormItem className="flex flex-col">
                           <FormLabel className="text-white font-kiona text-lg">
-                            Password
+                            return Date
                           </FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Password"
-                              className="bg-[#222529] text-white"
-                              {...field}
-                            />
-                          </FormControl>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant={"outline"}
+                                  className={cn(
+                                    "w-[170%] text-white text-lg h-16 pl-3 text-left font-normal bg-[#222529]",
+                                    !field.value && "text-muted-foreground"
+                                  )}
+                                >
+                                  {field.value ? (
+                                    format(field.value, "PPP")
+                                  ) : (
+                                    <span className="text-white">
+                                      Pick a return date
+                                    </span>
+                                  )}
+                                  <CalendarIcon
+                                    className="ml-auto h-4 w-4 opacity-50 "
+                                    color="white"
+                                  />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              className="w-auto p-0 bg-white"
+                              align="start"
+                            >
+                              <Calendar
+                                mode="single"
+                                selected={field.value}
+                                onSelect={field.onChange}
+                                disabled={(date) => date < new Date()}
+                                initialFocus
+                              />
+                            </PopoverContent>
+                          </Popover>
                           <FormMessage className="text-rose-600" />
                         </FormItem>
                       )}
