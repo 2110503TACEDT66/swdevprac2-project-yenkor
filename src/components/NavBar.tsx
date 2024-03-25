@@ -48,13 +48,16 @@ const NavBar = ({
                 isSticky ? "text-black  " : "text-white"
               }`}
             >
-              Explore the cars
+              Explore
             </button>
             <button
-              className={`font-normal text-xl hover:font-bold active:font-normal ${
+              onClick={() => router.push("/manage")}
+              className={`font-normal text-xl hover:font-bold hover:scale-105 transition duration-300 ease-in-out active:font-normal ${
                 isSticky ? "text-black  " : "text-white"
               }`}
-            ></button>
+            >
+              Reservation
+            </button>
           </div>
         </div>
 
