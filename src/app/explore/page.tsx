@@ -2,14 +2,26 @@ import ExplorePanel from "@/components/ExplorePanel";
 import NavBar from "@/components/NavBar";
 import { Input } from "@/components/ui/input";
 import getAllCarProviders from "@/lib/getAllCarProviders";
+import { getServerSession } from "next-auth";
 import React from "react";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
-const page = () => {
+const page = async () => {
   const carJson = getAllCarProviders();
+  const session = await getServerSession(authOptions);
+  console.log(`server-session: ${session}`);
+  var activeAuth = true;
+  if (!session || !session.user.token) {
+    activeAuth = false;
+  }
 
   return (
     <main>
-      <NavBar stickyState={false} showSignIn={true} />
+      <NavBar
+        stickyState={false}
+        showSignIn={!activeAuth}
+        session={activeAuth}
+      />
       <div className="flex flex-col items-center">
         <div className="flex flex-row w-[93%] p-6  items-center justify-between">
           <h1 className="text-3xl font-poppins text-white">Search Result</h1>

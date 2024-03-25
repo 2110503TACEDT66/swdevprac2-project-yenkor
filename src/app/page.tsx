@@ -1,13 +1,17 @@
 "use client";
 
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import HomeCard from "@/components/HomeCard";
 import NavBar from "@/components/NavBar";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [isSticky, setIsSticky] = useState(false);
   const [isFirst, setIsFirst] = useState(true);
+  const { data: session } = useSession();
+  console.log(session);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,7 +34,11 @@ export default function Home() {
 
   return (
     <main className="h-[200vh]">
-      <NavBar stickyState={isSticky} showSignIn={true} />
+      <NavBar
+        stickyState={isSticky}
+        showSignIn={session ? false : true}
+        session={session ? true : false}
+      />
 
       {/* Background */}
       <div className="overflow-hidden">
