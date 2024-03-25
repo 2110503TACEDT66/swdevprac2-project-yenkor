@@ -43,11 +43,12 @@ const NavBar = ({
               Home
             </button>
             <button
+              onClick={() => router.push("/explore")}
               className={`font-normal text-xl hover:font-bold hover:scale-105 transition duration-300 ease-in-out active:font-normal ${
                 isSticky ? "text-black  " : "text-white"
               }`}
             >
-              Reservation
+              Explore the cars
             </button>
             <button
               className={`font-normal text-xl hover:font-bold active:font-normal ${
