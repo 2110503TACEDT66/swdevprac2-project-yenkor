@@ -1,43 +1,27 @@
-"use client";
-
-import ExploreCard from "@/components/ExploreCard";
+import ExplorePanel from "@/components/ExplorePanel";
 import NavBar from "@/components/NavBar";
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import getAllCarProviders from "@/lib/getAllCarProviders";
+import { getServerSession } from "next-auth";
+import React from "react";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
-const page = () => {
-  const router = useRouter();
-  const [isSticky, setIsSticky] = useState(false);
-  useEffect(() => {
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 100) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const mockData = [
-    {
-      id: 1,
-      title: "Lamborghini",
-      description: "Yenkor Rental Car | Bangkok 10400 | 0987654321",
-    },
-  ];
+const page = async () => {
+  const carJson = getAllCarProviders();
+  const session = await getServerSession(authOptions);
+  console.log(`server-session: ${session}`);
+  var activeAuth = true;
+  if (!session || !session.user.token) {
+    activeAuth = false;
+  }
 
   return (
     <main>
-      <NavBar stickyState={isSticky} showSignIn={true} />
+      <NavBar
+        stickyState={false}
+        showSignIn={!activeAuth}
+        session={activeAuth}
+      />
       <div className="flex flex-col items-center">
         <div className="flex flex-row w-[93%] p-6  items-center justify-between">
           <h1 className="text-3xl font-poppins text-white">Search Result</h1>
@@ -47,16 +31,7 @@ const page = () => {
             className="w-1/4 h-12 rounded-2xl bg-[#1E1E1E] text-white"
           />
         </div>
-        {mockData.map((data) => (
-          <Link
-            className="w-[93%] h-2 flex flex-row flex-wrap"
-            href={`/reserve/${data.id}`}
-          >
-            <div className="w-[24%] h-[30rem] m-2 rounded-lg relative hover:scale-[102%] transition duration-200 ease-in-out active:scale-100">
-              <ExploreCard key={data.id} />
-            </div>
-          </Link>
-        ))}
+        <ExplorePanel carJson={carJson} />
       </div>
     </main>
   );

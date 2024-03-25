@@ -1,13 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { signOut } from "next-auth/react";
 
 const NavBar = ({
   stickyState,
   showSignIn,
+  session,
 }: {
   stickyState: boolean;
   showSignIn: boolean;
+  session: boolean;
 }) => {
   const router = useRouter();
   const isSticky = stickyState;
@@ -74,6 +80,32 @@ const NavBar = ({
             >
               Sign in
             </button>
+          ) : (
+            ""
+          )}
+
+          {session ? (
+            <Popover>
+              <PopoverTrigger>
+                <Image
+                  alt="profile"
+                  src="/img/profile.png"
+                  width={30}
+                  height={30}
+                  className="z-50 hover:scale-110 transition duration-300 ease-in-out"
+                />
+              </PopoverTrigger>
+              <PopoverContent className="bg-white w-36 p-3 mr-3 mt-3 flex flex-col space-y-4">
+                <button>Profile</button>
+                <button
+                  onClick={() => {
+                    signOut();
+                  }}
+                >
+                  Sign-out
+                </button>
+              </PopoverContent>
+            </Popover>
           ) : (
             ""
           )}

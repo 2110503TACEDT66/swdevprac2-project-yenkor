@@ -17,26 +17,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const page = () => {
-  const [isSticky, setIsSticky] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 100) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const formSchema = z.object({
     email: z.string().min(2, {
@@ -57,15 +41,19 @@ const page = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: true,
+      callbackUrl: "/",
+    });
   }
 
   return (
     <main>
-      <NavBar stickyState={isSticky} showSignIn={false} />;
+      <NavBar stickyState={false} showSignIn={false} session={false} />;
       <div className="flex flex-col items-center">
         <div className="bg-[#17191C] rounded-xl w-[90vw] h-[72vh] flex flex-row justify-around items-center">
           <div className=" w-[45%] h-[100%] flex flex-col relative justify-center">
