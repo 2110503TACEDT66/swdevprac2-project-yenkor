@@ -9,7 +9,8 @@ const config: Config = {
   theme: {
 
     fontFamily: {
-      kiona : ["kiona", "sans-serif"],
+      kiona: ["kiona", "sans-serif"],
+      poppins: ["Poppins", "sans-serif"],
     },
     extend: {
       backgroundImage: {
