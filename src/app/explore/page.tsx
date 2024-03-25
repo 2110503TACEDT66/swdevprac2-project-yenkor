@@ -52,7 +52,9 @@ const page = () => {
             className="w-[93%] h-2 flex flex-row flex-wrap"
             href={`/reserve/${data.id}`}
           >
-            <ExploreCard key={data.id} />
+            <div className="w-[24%] h-[30rem] m-2 rounded-lg relative hover:scale-[102%] transition duration-200 ease-in-out active:scale-100">
+              <ExploreCard key={data.id} />
+            </div>
           </Link>
         ))}
       </div>

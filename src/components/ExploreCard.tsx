@@ -3,7 +3,7 @@ import React from "react";
 
 const ExploreCard = ({ src }: { src?: string }) => {
   return (
-    <div className="w-[24%] h-[30rem] m-2 rounded-lg relative hover:scale-[102%] transition duration-200 ease-in-out active:scale-100">
+    <div className="w-full h-full">
       <div className="w-full h-[75%] relative">
         <Image
           alt="image"
