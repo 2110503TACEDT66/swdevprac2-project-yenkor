@@ -1,7 +1,13 @@
 import Image from "next/image";
 import React, { useState } from "react";
 
-const NavBar = ({ stickyState }: { stickyState: boolean }) => {
+const NavBar = ({
+  stickyState,
+  showSignIn,
+}: {
+  stickyState: boolean;
+  showSignIn: boolean;
+}) => {
   const isSticky = stickyState;
   return (
     <div className="py-12  sticky top-[-3rem] z-50">
@@ -49,21 +55,20 @@ const NavBar = ({ stickyState }: { stickyState: boolean }) => {
         </div>
 
         <div className="flex flex-row space-x-4">
-          <button
-            className={`px-6 py-2 rounded-md font-bold shadow-lg
+          {showSignIn ? (
+            <button
+              className={`px-6 py-2 rounded-md font-bold shadow-lg
             ${
               isSticky
                 ? "bg-gray-900 text-white hover:bg-gray-600 transition duration-300 ease-in-out hover:scale-105 active:bg-gray-600 active:scale-95 active:shadow-inner"
                 : "bg-white text-black hover:bg-gray-300 hover:scale-105 transition duration-300 ease-in-out active:bg-gray-300 active:scale-95 active:shadow-inner"
-            }
-            
-                      `}
-            // "bg-white px-6 py-2 rounded-md font-bold shadow-lg
-            //   hover:bg-[#F2F2F2] transition duration-300 ease-in-out
-            //   active:bg-[#F2F2F2] active:scale-95 active:shadow-inner"
-          >
-            Sign in
-          </button>
+            }`}
+            >
+              Sign in
+            </button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

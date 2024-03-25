@@ -30,7 +30,7 @@ export default function Home() {
 
   return (
     <main className="h-[200vh]">
-      <NavBar stickyState={isSticky} />
+      <NavBar stickyState={isSticky} showSignIn={true} />
 
       {/* Background */}
       <div className="overflow-hidden">
