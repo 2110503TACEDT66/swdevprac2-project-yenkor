@@ -13,10 +13,10 @@ const ExploreCard = ({ src }: { src?: string }) => {
         />
       </div>
       <div className="bg-white rounded-b-lg w-full h-[30%] absolute bottom-0 flew flex-col">
-        <div className="text-black pt-5 pl-5">
+        <div className="text-black pt-5 pl-7">
           <h1 className="text-2xl font-poppins font-bold">Lamborghini</h1>
         </div>
-        <div className="text-black pt-2 pl-5">
+        <div className="text-black pt-2 pl-7">
           <h1 className="text-lg font-poppins font-normal">
             Yenkor Rental Car | Bangkok 10400 | 0987654321
           </h1>
