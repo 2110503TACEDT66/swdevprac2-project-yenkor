@@ -16,9 +16,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [isSticky, setIsSticky] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,7 +73,12 @@ const page = () => {
               <h1 className="text-6xl z-40 text-white font-poppins ">Log-in</h1>
               <h1 className="text-base z-40 text-white font-kiona ">
                 Doesn’t have one?
-                <span className="pl-2 text-lg z-40 font-kiona bg-gradient-to-r from-[#F05B80] to-[#4158F0] inline-block text-transparent bg-clip-text hover:scale-105 transition duration-300 ease-in-out hover:invert active:scale-100">
+                <span
+                  onClick={() => {
+                    router.push("/sign-up");
+                  }}
+                  className="pl-2 text-lg z-40 font-kiona bg-gradient-to-r from-[#F05B80] to-[#4158F0] inline-block text-transparent bg-clip-text hover:scale-105 transition duration-300 ease-in-out hover:invert active:scale-100"
+                >
                   Go to sign-up
                 </span>
               </h1>

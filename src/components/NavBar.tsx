@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const NavBar = ({
@@ -8,6 +9,7 @@ const NavBar = ({
   stickyState: boolean;
   showSignIn: boolean;
 }) => {
+  const router = useRouter();
   const isSticky = stickyState;
   return (
     <div className="py-12  sticky top-[-3rem] z-50">
@@ -33,6 +35,7 @@ const NavBar = ({
 
           <div className="flex flex-row space-x-8 ml-12">
             <button
+              onClick={() => router.push("/")}
               className={`font-normal text-xl hover:font-bold hover:scale-105 transition duration-300 ease-in-out active:font-normal ${
                 isSticky ? "text-black  " : "text-white"
               }`}
@@ -57,6 +60,7 @@ const NavBar = ({
         <div className="flex flex-row space-x-4">
           {showSignIn ? (
             <button
+              onClick={() => router.push("/sign-in")}
               className={`px-6 py-2 rounded-md font-bold shadow-lg
             ${
               isSticky
