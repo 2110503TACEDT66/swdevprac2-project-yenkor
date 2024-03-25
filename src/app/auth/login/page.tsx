@@ -19,8 +19,8 @@ export default function LoginPage() {
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [isPassValid, setIsPassValid] = useState(false);
 
-    const { data: session} = useSession();
-    if (session) redirect("/");
+    // const { data: session} = useSession();
+    // if (session) redirect("/");
 
 
     // const router = useRouter();
@@ -48,15 +48,16 @@ export default function LoginPage() {
         setIsPassValid(newPassword.length > 0);
     };
     
-    const login = async () =>  {
-        const res = await signIn("credentials", {
-            email,
-            password
-        });
+    // const login = async () =>  {
+    //     const res = await signIn("credentials", {
+    //         email: email,
+    //         password: password,
+    //         callbackUrl: '/car'
+    //     });
         
-        if (res != null) alert("SUCCESS");
-        else alert("NULL")
-    }
+    //     // if (res != null) alert("SUCCESS");
+    //     // else alert("NULL")
+    // }
 
     return (
         <main className="m-[100px]">
@@ -89,7 +90,13 @@ export default function LoginPage() {
                     </div>
                     <div className="mt-14">
                     <button disabled={isEmailValid && isPassValid ? false : true} className={`w-[130px] py-2 text-lg rounded-lg ${isEmailValid && isPassValid ? 'bg-gradient-to-r from-pink-400 to-indigo-600 text-white' : 'bg-slate-100 text-slate-300 opacity-80 cursor-not-allowed'}`} 
-                    onClick={ () => {login} }>Submit</button>
+                    onClick={ () => {
+                        signIn("credentials", {
+                            email: email,
+                            password: password,
+                            callbackUrl: '/car'
+                        });
+                    } }>Submit</button>
 
                     </div>
                     
