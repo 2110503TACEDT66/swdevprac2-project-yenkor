@@ -4,10 +4,15 @@ import HomeCard from "@/components/HomeCard";
 import NavBar from "@/components/NavBar";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function Home() {
   const [isSticky, setIsSticky] = useState(false);
   const [isFirst, setIsFirst] = useState(true);
+  const session = useSession();
+
+  // if (session) console.log(session);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,7 +35,22 @@ export default function Home() {
 
   return (
     <main className="h-[200vh]">
-      <NavBar stickyState={isSticky} />
+      <NavBar stickyState={isSticky} topRight={ // Send Top Right Item on NavBar (In This case is Sign in Button)
+          <button
+            className={`px-6 py-2 rounded-md font-bold shadow-lg
+            ${
+              isSticky
+                ? "bg-gray-900 text-white hover:bg-gray-600 transition duration-300 ease-in-out hover:scale-105 active:bg-gray-600 active:scale-95 active:shadow-inner"
+                : "bg-white text-black hover:bg-gray-300 hover:scale-105 transition duration-300 ease-in-out active:bg-gray-300 active:scale-95 active:shadow-inner"
+            }
+            
+            `}
+            >{ // If User logged in Show Sign out Button, Otherwise Show Sign in
+              session.status == "authenticated" ? <Link href={"/api/auth/signout"}>Sign out</Link>
+              : <Link href={"auth/login"}>Sign in</Link>
+            }
+          </button>
+      }/>
 
       {/* Background */}
       <div className="overflow-hidden">
@@ -87,7 +107,11 @@ export default function Home() {
             <div className="flex flex-col">
               <h1 className="text-white text-lg">Explore the </h1>
               <h1 className="text-white text-lg">new travel experience</h1>
+              {/* {
+                session? <div className="text-white">Hello {session.data?.user.name}</div> : <div className="text-white">Not loged in</div>
+              } */}
             </div>
+            
           </div>
 
           <div className="flex flex-row space-x-4">
