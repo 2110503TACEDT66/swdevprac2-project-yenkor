@@ -4,6 +4,7 @@ import { useState } from "react";
 import NavBar from "@/components/NavBar";
 import userRegister from "@/libs/userRegister";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function RegisterPage() {
 
@@ -71,63 +72,100 @@ export default function RegisterPage() {
     }
 
     return (
-        <main className="px-[100px]">
-            <NavBar stickyState={false} topRight={null}/>
-            <div className="text-white p-20 bg-black h-[80vh] flex flex-row items-center">
-                <div className="w-1/2 text-center space-y-3 flex flex-col items-start p-[100px]">
-                    <div>
-                        <p className="text-5xl">Registration</p>
-                    </div>
-                    <div className="flex gap-3">
-                        <p>ALREADY HAVE ACCOUNT?</p>
-                        <p className="bg-gradient-to-r from-pink-400 to-indigo-600 bg-clip-text text-transparent">GO TO LOG-IN</p>
-                    </div>
+        <main className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
+            {/* <NavBar stickyState={false} topRight={null} /> */}
+            <div className="text-white p-10 sm:p-20 bg-black min-h-[80vh] flex flex-col sm:flex-row items-center">
+                <div className="w-full sm:w-1/2 text-center space-y-3 flex flex-col items-center sm:items-start p-4 sm:p-8">
+                <div>
+                    <p className="text-3xl sm:text-5xl">Registration</p>
                 </div>
-                <div className="w-1/2 text-white flex flex-col gap-10 items-start justify-end p-20 border-l-2 border-l-white">
+                <div className="flex flex-col sm:flex-row items-center gap-3">
+                    <p>ALREADY HAVE AN ACCOUNT?</p>
+                    <Link
+                    href={"/auth/login"}
+                    className="bg-gradient-to-r from-pink-400 to-indigo-600 bg-clip-text text-transparent hover:transition duration-300 ease-in-out hover:scale-110 active:scale-95 active:shadow-inner"
+                    >
+                    GO TO LOG-IN
+                    </Link>
+                </div>
+                </div>
+                    <div className="w-full sm:w-1/2 text-white flex flex-col gap-10 items-center sm:items-start justify-end p-4 sm:p-20 border-t-2 sm:border-t-0 border-l-0 sm:border-l-2 border-l-white sm:border-l-white">
                     <div>
-                        <label htmlFor="name" className="block text-gray-300">NAME</label>
-                        <input id="name" type="text" value={name}
+                        <label htmlFor="name" className="block text-gray-300">
+                        NAME
+                        </label>
+                        <input
+                        id="name"
+                        type="text"
+                        value={name}
                         placeholder="Name (Can't contain spaces)"
                         required
-                        onChange={(e) => {handleChangeName(e); console.log(e.target.value) }}
-                        className=" text-2xl w-[350px] appearance-none outline-none border-solid border-b-2 border-gray-500 bg-transparent bg-opacity-20 rounded-tl rounded-tr-none py-2 text-pink-500"/>
+                        onChange={(e) => handleChangeName(e)}
+                        className="text-2xl w-full sm:w-[350px] appearance-none outline-none border-solid border-b-2 border-gray-500 bg-transparent bg-opacity-20 rounded-tl rounded-tr-none py-2 text-pink-500"
+                        />
                     </div>
                     <div>
-                        <label htmlFor="tel" className="block text-gray-300">PHONE</label>
-                        <input id="tel" type="text" value={tel}
+                        <label htmlFor="tel" className="block text-gray-300">
+                        PHONE
+                        </label>
+                        <input
+                        id="tel"
+                        type="text"
+                        value={tel}
                         placeholder="0xxxxxxxxx"
                         required
-                        onChange={(e) => { handleChangeTel(e); console.log(e.target.value)}}
-                        className=" text-2xl w-[350px] appearance-none outline-none border-solid border-b-2 border-gray-500 bg-transparent bg-opacity-20 rounded-tl rounded-tr-none py-2 text-pink-500"/>
+                        onChange={(e) => handleChangeTel(e)}
+                        className="text-2xl w-full sm:w-[350px] appearance-none outline-none border-solid border-b-2 border-gray-500 bg-transparent bg-opacity-20 rounded-tl rounded-tr-none py-2 text-pink-500"
+                        />
                     </div>
                     <div>
-                        <label htmlFor="email" className="block text-gray-300">EMAIL</label>
-                        <input id="email" type="text" value={email}
+                        <label htmlFor="email" className="block text-gray-300">
+                        EMAIL
+                        </label>
+                        <input
+                        id="email"
+                        type="text"
+                        value={email}
                         placeholder="example@gmail.com"
                         required
-                        onChange={(e) => {handleChangeEmail(e); console.log(e.target.value)}}
-                        className=" text-2xl w-[350px] appearance-none outline-none border-solid border-b-2 border-gray-500 bg-transparent bg-opacity-20 rounded-tl rounded-tr-none py-2 text-pink-500"/>
+                        onChange={(e) => handleChangeEmail(e)}
+                        className="text-2xl w-full sm:w-[350px] appearance-none outline-none border-solid border-b-2 border-gray-500 bg-transparent bg-opacity-20 rounded-tl rounded-tr-none py-2 text-pink-500"
+                        />
                     </div>
                     <div>
-                        <label htmlFor="password" className="block text-gray-300">PASSWORD</label>
-                        <input id="password" type="password" value={password}
+                        <label htmlFor="password" className="block text-gray-300">
+                        PASSWORD
+                        </label>
+                        <input
+                        id="password"
+                        type="password"
+                        value={password}
                         required
                         placeholder="At least 8 characters"
-                        onChange={(e) => {handleChangePassword(e); console.log(e.target.value) }}
-                        className="text-2xl w-[350px] appearance-none outline-none border-solid border-b-2 border-gray-500 bg-transparent bg-opacity-20 rounded-tl rounded-tr-none py-2 text-pink-500"/>
+                        onChange={(e) => handleChangePassword(e)}
+                        className="text-2xl w-full sm:w-[350px] appearance-none outline-none border-solid border-b-2 border-gray-500 bg-transparent bg-opacity-20 rounded-tl rounded-tr-none py-2 text-pink-500"
+                        />
                     </div>
                     <div className="mt-14">
-                    <button disabled={isNameValid && isTelValid && isEmailValid && isPassValid ? false : true} className={`w-[130px] py-2 text-lg rounded-lg ${isNameValid && isTelValid && isEmailValid && isPassValid ? 'bg-gradient-to-r from-pink-400 to-indigo-600 text-white' : 'bg-slate-100 text-slate-300 opacity-80 cursor-not-allowed'}`} 
-                    onClick={ async () => {
-                                await register();
-                                router.push('/auth/login');
-                    } }>Submit</button>
-
+                        <button
+                        disabled={!isNameValid || !isTelValid || !isEmailValid || !isPassValid}
+                        className={`w-full sm:w-[130px] py-2 text-lg rounded-lg ${
+                            isNameValid && isTelValid && isEmailValid && isPassValid
+                            ? "bg-gradient-to-r from-pink-400 to-indigo-600 text-white"
+                            : "bg-slate-100 text-slate-300 opacity-80 cursor-not-allowed"
+                        }`}
+                        onClick={async () => {
+                            await register();
+                            router.push("/auth/login");
+                        }}
+                        >
+                        Submit
+                        </button>
                     </div>
-                    
                 </div>
             </div>
-            
-        </main>
+</main>
+
+
     );
 }
