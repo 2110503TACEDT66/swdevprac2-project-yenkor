@@ -11,7 +11,7 @@ import { ChangeEvent } from "react";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
-export default function LoginPage() {
+export default function LoginPage({errorMessage} : {errorMessage: string}) {
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -74,6 +74,7 @@ export default function LoginPage() {
                 </div>
                 <div className="w-1/2 h-full text-white flex flex-col gap-10 items-start justify-end p-20 ">
                     <div>
+                        <p className="my-4 text-rose-700 font-medium text-lg">{`${errorMessage ?  errorMessage : ''}`}</p>
                         <label htmlFor="email" className="block text-gray-300">EMAIL</label>
                         <input id="email" type="text" value={email}
                         placeholder="example@gmail.com"
