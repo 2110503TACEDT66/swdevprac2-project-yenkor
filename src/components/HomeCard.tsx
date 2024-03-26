@@ -5,13 +5,18 @@ const HomeCard = ({
   src,
   alt,
   text,
+  onClick,
 }: {
   src: string;
   alt: string;
   text: string;
+  onClick?: Function;
 }) => {
   return (
-    <div className="bg-white w-[35rem] h-[45rem] rounded-lg relative flex items-center justify-center hover:scale-105 transition duration-300 ease-in-out">
+    <div
+      onClick={onClick ? () => onClick() : () => {}}
+      className="bg-white w-[35rem] h-[45rem] rounded-lg relative flex items-center justify-center hover:scale-105 transition duration-300 ease-in-out"
+    >
       <Image
         alt={alt}
         src={src}

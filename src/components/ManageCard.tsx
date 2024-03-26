@@ -1,7 +1,4 @@
 "use client";
-import ExploreCard from "@/components/ExploreCard";
-import NavBar from "@/components/NavBar";
-import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -42,6 +39,7 @@ const ManageCard = ({
   carId,
   adminView,
   userName,
+  src,
 }: {
   id: string;
   rentDate: Date;
@@ -52,6 +50,7 @@ const ManageCard = ({
   carId: string;
   adminView: boolean;
   userName: string;
+  src: string;
 }) => {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
@@ -79,13 +78,15 @@ const ManageCard = ({
       values.rentDate,
       id,
       session?.user?.token ?? ""
-    ).then(() =>
+    ).then(() => {
       toast({
         title: "Success",
         description: "Reservation updated successfully",
         duration: 3000,
-      })
-    );
+      });
+      location.reload();
+      setIsEditing(false);
+    });
     console.log(values);
   }
   return (
@@ -113,7 +114,7 @@ const ManageCard = ({
         </div>
         <div className="w-[30%] h-full bg-red-100 relative rounded-lg">
           <Image
-            src="/img/place_holder.jpg"
+            src={src ?? "/img/place_holder.jpg"}
             fill={true}
             alt="car"
             onClick={() => router.push(`/reserve/${carId}`)}

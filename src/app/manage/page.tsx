@@ -55,6 +55,7 @@ interface CarProvider {
   price: number;
   telephone: string;
   id: string;
+  src: string;
 }
 
 interface User {
@@ -65,9 +66,14 @@ interface User {
 
 const page = () => {
   const { data: session } = useSession();
+
   const router = useRouter();
   const [isSticky, setIsSticky] = useState(false);
   const { toast } = useToast();
+
+  if (!session) {
+    router.push("/sign-in");
+  }
 
   const reservationReducer = (
     state: Array<ReservationItem>,
@@ -134,6 +140,7 @@ const page = () => {
           </div>
           {userReservationState.map((item) => (
             <ManageCard
+              src={item.carProvider.src}
               id={item._id}
               name={item.carProvider.name}
               rentDate={new Date(item.rentDate)}
@@ -158,6 +165,7 @@ const page = () => {
                         price: 0,
                         telephone: "",
                         id: "",
+                        src: "",
                       },
                       createAt: "",
                       returned: false,

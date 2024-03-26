@@ -16,7 +16,7 @@ const ExploreCard = ({
         <Image
           alt="image"
           fill={true}
-          src={src || "/img/place_holder.jpg"}
+          src={src ?? "/img/car_placeholder.png"}
           className="object-cover rounded-lg"
         />
       </div>
