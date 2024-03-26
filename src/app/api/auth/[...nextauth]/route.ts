@@ -18,7 +18,7 @@ export const authOptions:AuthOptions =  {
               password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
-              
+            
               if (!credentials) return null;
               const user = await userLogin(credentials.email, credentials.password);
               // const user = {id: "1", email: "TESTER@gmail.com", password: "01234567", name:"TESTER"}
@@ -47,7 +47,8 @@ export const authOptions:AuthOptions =  {
         },
     },
     pages: {
-      signIn: '/auth/login'
+      signIn: '/auth/login',
+      error: '/auth/error'
     }
 }
 
