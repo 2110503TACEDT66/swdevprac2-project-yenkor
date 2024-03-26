@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import createUser from "@/lib/createUser";
+import createUser from "@/libs/createUser";
 import { signIn } from "next-auth/react";
 
 const page = () => {

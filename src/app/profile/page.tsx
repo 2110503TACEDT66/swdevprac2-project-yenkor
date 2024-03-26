@@ -1,9 +1,9 @@
 import NavBar from "@/components/NavBar";
 import { getServerSession } from "next-auth";
 import React from "react";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import getMe from "@/lib/getMe";
+import getMe from "@/libs/getMe";
 import { redirect } from "next/navigation";
+import { authOptions } from "@/libs/auth";
 
 const page = async () => {
   const session = await getServerSession(authOptions);

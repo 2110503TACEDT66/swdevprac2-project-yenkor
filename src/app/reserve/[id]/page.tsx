@@ -22,14 +22,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { format, set } from "date-fns";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { useSession } from "next-auth/react";
-import getAllCarProviders from "@/lib/getAllCarProviders";
-import getSingleCarProvider from "@/lib/getSingleCarProvider";
+import getAllCarProviders from "@/libs/getAllCarProviders";
+import getSingleCarProvider from "@/libs/getSingleCarProvider";
 import { useRouter } from "next/navigation";
-import createReservation from "@/lib/createReservation";
+import createReservation from "@/libs/createReservation";
 import { useToast } from "@/components/ui/use-toast";
 
 const page = ({ params }: { params: { id: string } }) => {

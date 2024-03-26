@@ -1,10 +1,10 @@
 import ExplorePanel from "@/components/ExplorePanel";
 import NavBar from "@/components/NavBar";
 import { Input } from "@/components/ui/input";
-import getAllCarProviders from "@/lib/getAllCarProviders";
+import { authOptions } from "@/libs/auth";
+import getAllCarProviders from "@/libs/getAllCarProviders";
 import { getServerSession } from "next-auth";
 import React from "react";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
 const page = async () => {
   const carJson = getAllCarProviders();

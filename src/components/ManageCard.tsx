@@ -19,14 +19,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import deleteReservation from "@/lib/deleteReservation";
-import editReservation from "@/lib/editReservation";
+import deleteReservation from "@/libs/deleteReservation";
+import editReservation from "@/libs/editReservation";
 import { useToast } from "./ui/use-toast";
 
 const ManageCard = ({

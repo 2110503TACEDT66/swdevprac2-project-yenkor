@@ -23,16 +23,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import Image from "next/image";
 import ManageCard from "@/components/ManageCard";
 import { useSession } from "next-auth/react";
-import getUserReservation from "@/lib/getUserReservation";
-import getSingleCarProvider from "@/lib/getSingleCarProvider";
-import getAllCarProviders from "@/lib/getAllCarProviders";
-import deleteReservation from "@/lib/deleteReservation";
+import getUserReservation from "@/libs/getUserReservation";
+import getSingleCarProvider from "@/libs/getSingleCarProvider";
+import getAllCarProviders from "@/libs/getAllCarProviders";
+import deleteReservation from "@/libs/deleteReservation";
 import { useRouter } from "next/navigation";
 import { ro } from "date-fns/locale";
 import { useToast } from "@/components/ui/use-toast";

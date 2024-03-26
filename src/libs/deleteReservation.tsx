@@ -1,8 +1,8 @@
-export default async function getSingleCarProvider(id: string, token?: string) {
+export default async function deleteReservation(id: string, token?: string) {
   const response = await fetch(
-    `http://localhost:5000/api/v1/carproviders/${id}`,
+    `${process.env.BACKEND_URL}/api/v1/rentings/${id}`,
     {
-      method: "GET",
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
       },
