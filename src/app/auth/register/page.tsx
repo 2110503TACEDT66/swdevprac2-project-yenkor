@@ -12,15 +12,18 @@ export default function RegisterPage() {
 
     const [name, setName] = useState<string>('');
     const [tel, setTel] = useState<string>('');
+    const [address, setAddress] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    // const [, ] = useState<string>('');
     const [showPassword, setShowPassword] = useState(false);
 
     const [isNameValid, setIsNameValid] = useState(false);
     const [isTelValid, setIsTelValid] = useState(false);
+    const [isAddressValid, setIsAddressValid] = useState(false);
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [isPassValid, setIsPassValid] = useState(false);
+
+    let isFormValid = isNameValid && isTelValid && isAddressValid && isEmailValid && isPassValid;
     
     // const [isFormValid, setIsFormValid] = useState(false);
 
@@ -51,6 +54,12 @@ export default function RegisterPage() {
         setIsTelValid(validateTel(newTel));
         // validateForm();
     };
+
+    const handleChangeAddress = (e: ChangeEvent<HTMLInputElement>) => {
+        const newAddress = e.target.value;
+        setAddress(newAddress);
+        setIsAddressValid(newAddress.trim().length > 0);
+    }
 
     const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
         const newEmail = e.target.value;
@@ -92,7 +101,7 @@ export default function RegisterPage() {
                     <div className="w-full sm:w-1/2 text-white flex flex-col gap-10 items-center sm:items-start justify-end p-4 sm:p-20 border-t-2 sm:border-t-0 border-l-0 sm:border-l-2 border-l-white sm:border-l-white">
                     <div>
                         <label htmlFor="name" className="block text-gray-300">
-                        NAME
+                        NAME *
                         </label>
                         <input
                         id="name"
@@ -106,7 +115,7 @@ export default function RegisterPage() {
                     </div>
                     <div>
                         <label htmlFor="tel" className="block text-gray-300">
-                        PHONE
+                        PHONE *
                         </label>
                         <input
                         id="tel"
@@ -119,8 +128,22 @@ export default function RegisterPage() {
                         />
                     </div>
                     <div>
+                        <label htmlFor="address" className="block text-gray-300">
+                        ADDRESS *
+                        </label>
+                        <input
+                        id="address"
+                        type="text"
+                        value={address}
+                        placeholder="Bangkok | 10400"
+                        required
+                        onChange={(e) => handleChangeAddress(e)}
+                        className="text-2xl w-full sm:w-[350px] appearance-none outline-none border-solid border-b-2 border-gray-500 bg-transparent bg-opacity-20 rounded-tl rounded-tr-none py-2 text-pink-500"
+                        />
+                    </div>
+                    <div>
                         <label htmlFor="email" className="block text-gray-300">
-                        EMAIL
+                        EMAIL *
                         </label>
                         <input
                         id="email"
@@ -134,7 +157,7 @@ export default function RegisterPage() {
                     </div>
                     <div>
                         <label htmlFor="password" className="block text-gray-300">
-                        PASSWORD
+                        PASSWORD *
                         </label>
                         <input
                         id="password"
@@ -148,9 +171,9 @@ export default function RegisterPage() {
                     </div>
                     <div className="mt-14">
                         <button
-                        disabled={!isNameValid || !isTelValid || !isEmailValid || !isPassValid}
+                        disabled={!isFormValid}
                         className={`w-full sm:w-[130px] py-2 text-lg rounded-lg ${
-                            isNameValid && isTelValid && isEmailValid && isPassValid
+                            isFormValid
                             ? "bg-gradient-to-r from-pink-400 to-indigo-600 text-white"
                             : "bg-slate-100 text-slate-300 opacity-80 cursor-not-allowed"
                         }`}
