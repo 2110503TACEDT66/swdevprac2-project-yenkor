@@ -1,13 +1,9 @@
 "use client";
-
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import HomeCard from "@/components/HomeCard";
 import NavBar from "@/components/NavBar";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
 
 export default function Home() {
   const [isSticky, setIsSticky] = useState(false);
@@ -101,7 +97,6 @@ export default function Home() {
                 session? <div className="text-white">Hello {session.data?.user.name}</div> : <div className="text-white">Not loged in</div>
               } */}
             </div>
-            
           </div>
 
           <div className="flex flex-row space-x-4">

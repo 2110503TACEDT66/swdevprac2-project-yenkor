@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -6,6 +5,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 const NavBar = ({
   stickyState,
@@ -18,14 +18,6 @@ const NavBar = ({
 }) => {
   const router = useRouter();
   const isSticky = stickyState;
-
-       
-  const {data:session} = useSession();
-
-        // For Debug Only // 
-  console.log(session?.user.token);
-  /////////////////////////////////////
-
   return (
     <div className="py-12  sticky top-[-3rem] z-50">
       <div
@@ -36,17 +28,19 @@ const NavBar = ({
         }`}
       >
         <div className="flex flex-row items-center">
-          <Image
-            alt="logo"
-            src={`${
-              isSticky
-                ? "/img/yenkor_logo_black.png"
-                : "/img/yenkor_logo_trans.png"
-            }`}
-            width={255}
-            height={55}
-            className="z-50 hover:scale-110 transition duration-300 ease-in-out"
-          />
+          <Link href={"/"}>
+            <Image
+              alt="logo"
+              src={`${
+                isSticky
+                  ? "/img/yenkor_logo_black.png"
+                  : "/img/yenkor_logo_trans.png"
+              }`}
+              width={255}
+              height={55}
+              className="z-50 hover:scale-110 transition duration-300 ease-in-out"
+            />
+          </Link>
 
           <div className="flex flex-row space-x-8 ml-12">
             <button
@@ -75,7 +69,7 @@ const NavBar = ({
             </button>
           </div>
         </div>
-         {/* // To make NavBar Reusable Component */}
+
         <div className="flex flex-row space-x-4">
           {showSignIn ? (
             <button
@@ -106,6 +100,7 @@ const NavBar = ({
               </PopoverTrigger>
               <PopoverContent className="bg-white w-36 p-3 mr-3 mt-3 flex flex-col space-y-4">
                 <button
+                  className="p-2 hover:bg-slate-300 rounded-md"
                   onClick={() => {
                     router.push("/profile");
                   }}
@@ -113,6 +108,7 @@ const NavBar = ({
                   Profile
                 </button>
                 <button
+                  className="p-2 hover:bg-slate-300 rounded-md"
                   onClick={() => {
                     signOut();
                   }}

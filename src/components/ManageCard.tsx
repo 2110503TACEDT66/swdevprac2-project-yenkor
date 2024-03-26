@@ -40,6 +40,8 @@ const ManageCard = ({
   onRemove,
   deleteReservation,
   carId,
+  adminView,
+  userName,
 }: {
   id: string;
   rentDate: Date;
@@ -48,6 +50,8 @@ const ManageCard = ({
   onRemove: Function;
   deleteReservation: Function;
   carId: string;
+  adminView: boolean;
+  userName: string;
 }) => {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
@@ -121,7 +125,14 @@ const ManageCard = ({
             onClick={() => router.push(`/reserve/${carId}`)}
             className="text-white font-poppins font-bold text-4xl hover:text-gray-300 transition duration-100 ease-in-out hover:scale-[101%] active:scale-100"
           >
-            {name}
+            {adminView ? (
+              <div>
+                <h1>{name}</h1>
+                <span className="text-sm"> | Reserve by {userName}</span>
+              </div>
+            ) : (
+              <h1>{name}</h1>
+            )}
           </h1>
           {isEditing ? (
             <div className="flex flex-row pt-5">
