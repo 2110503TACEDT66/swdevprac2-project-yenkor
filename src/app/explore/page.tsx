@@ -24,11 +24,13 @@ const page = async () => {
       />
       <div className="flex flex-col items-center">
         <div className="flex flex-row w-[93%] p-6  items-center justify-between">
-          <h1 className="text-3xl font-poppins text-white">Search Result</h1>
+          <h1 className="text-3xl font-poppins text-white">
+            Explore the Available Cars
+          </h1>
           <Input
             placeholder="Search"
             type="text"
-            className="w-1/4 h-12 rounded-2xl bg-[#1E1E1E] text-white"
+            className="w-1/4 h-12 rounded-2xl bg-[#1E1E1E] text-white hidden"
           />
         </div>
         <ExplorePanel carJson={carJson} />
