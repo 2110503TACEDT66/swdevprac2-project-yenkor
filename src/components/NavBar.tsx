@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -17,6 +18,14 @@ const NavBar = ({
 }) => {
   const router = useRouter();
   const isSticky = stickyState;
+
+       
+  const {data:session} = useSession();
+
+        // For Debug Only // 
+  console.log(session?.user.token);
+  /////////////////////////////////////
+
   return (
     <div className="py-12  sticky top-[-3rem] z-50">
       <div
@@ -66,7 +75,7 @@ const NavBar = ({
             </button>
           </div>
         </div>
-
+         {/* // To make NavBar Reusable Component */}
         <div className="flex flex-row space-x-4">
           {showSignIn ? (
             <button

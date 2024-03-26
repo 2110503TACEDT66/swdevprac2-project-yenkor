@@ -6,6 +6,8 @@ import NavBar from "@/components/NavBar";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function Home() {
   const [isSticky, setIsSticky] = useState(false);
@@ -95,7 +97,11 @@ export default function Home() {
             <div className="flex flex-col">
               <h1 className="text-white text-lg">Explore the </h1>
               <h1 className="text-white text-lg">new travel experience</h1>
+              {/* {
+                session? <div className="text-white">Hello {session.data?.user.name}</div> : <div className="text-white">Not loged in</div>
+              } */}
             </div>
+            
           </div>
 
           <div className="flex flex-row space-x-4">
