@@ -39,7 +39,7 @@ export default function RegisterPage() {
     const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
         const newName = e.target.value;
         setName(newName);
-        setIsNameValid(newName.length > 0 && !newName.includes(' '));
+        setIsNameValid(newName.trim().length > 0);
         // validateForm();
     };
 
@@ -76,7 +76,7 @@ export default function RegisterPage() {
     };
 
     const register = async () => {
-        const res = await userRegister(name, tel, email, password);
+        const res = await userRegister(name, tel, address ,email, password);
         return res;
     }
 
@@ -107,7 +107,7 @@ export default function RegisterPage() {
                         id="name"
                         type="text"
                         value={name}
-                        placeholder="Name (Can't contain spaces)"
+                        placeholder="Your Name"
                         required
                         onChange={(e) => handleChangeName(e)}
                         className="text-2xl w-full sm:w-[350px] appearance-none outline-none border-solid border-b-2 border-gray-500 bg-transparent bg-opacity-20 rounded-tl rounded-tr-none py-2 text-pink-500"
