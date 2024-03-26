@@ -22,3 +22,12 @@ type CarProps = {
   price: number;
   address: string;
 };
+
+type createUserProps = {
+  userName: string;
+  userEmail: string;
+  userPassword: string;
+  userPhone: string;
+  userLocation: string;
+  balance: number;
+};
