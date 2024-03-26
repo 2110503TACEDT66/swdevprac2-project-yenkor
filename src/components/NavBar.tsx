@@ -1,8 +1,19 @@
+'use client'
 import Image from "next/image";
 import React, { useState } from "react";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
-const NavBar = ({ stickyState }: { stickyState: boolean }) => {
+const NavBar = ({ stickyState, topRight }: { stickyState: boolean, topRight: React.ReactNode }) => {
   const isSticky = stickyState;
+
+       
+  const {data:session} = useSession();
+
+        // For Debug Only // 
+  console.log(session?.user.token);
+  /////////////////////////////////////
+
   return (
     <div className="py-12  sticky top-[-3rem] z-50">
       <div
@@ -47,8 +58,14 @@ const NavBar = ({ stickyState }: { stickyState: boolean }) => {
             ></button>
           </div>
         </div>
-
+         {/* // To make NavBar Reusable Component */}
         <div className="flex flex-row space-x-4">
+          {topRight}
+        </div>
+
+  
+        
+        {/* <div className="flex flex-row space-x-4">
           <button
             className={`px-6 py-2 rounded-md font-bold shadow-lg
             ${
@@ -61,10 +78,13 @@ const NavBar = ({ stickyState }: { stickyState: boolean }) => {
             // "bg-white px-6 py-2 rounded-md font-bold shadow-lg
             //   hover:bg-[#F2F2F2] transition duration-300 ease-in-out
             //   active:bg-[#F2F2F2] active:scale-95 active:shadow-inner"
-          >
-            Sign in
+          >{ 
+            session? <Link href={"/api/auth/signout"}>Sign out</Link>
+            : <Link href={"auth/login"}>Sign in</Link>
+          }
+            
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
