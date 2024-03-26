@@ -75,10 +75,11 @@ const ManageCard = ({
       values.rentDate,
       id,
       session?.user?.token ?? ""
-    ).then(
+    ).then(() =>
       toast({
         title: "Success",
         description: "Reservation updated successfully",
+        duration: 3000,
       })
     );
     console.log(values);

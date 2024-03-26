@@ -17,8 +17,8 @@ export default async function editReservation(
     }),
   });
 
-  if (!response.ok) {
-    throw new Error("Failed to create reservation");
+  if (!response.status) {
+    console.log(response);
   }
   return response.json();
 }

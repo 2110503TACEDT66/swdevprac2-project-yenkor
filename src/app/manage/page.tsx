@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import React, { useEffect, useReducer, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { any, z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -37,6 +37,26 @@ import { useRouter } from "next/navigation";
 import { ro } from "date-fns/locale";
 import { useToast } from "@/components/ui/use-toast";
 
+interface ReservationItem {
+  _id: string;
+  rentDate: string;
+  rentTo: string;
+  user: string;
+  carProvider: CarProvider;
+  createAt: string;
+  returned: boolean;
+  __v: number;
+}
+
+interface CarProvider {
+  _id: string;
+  name: string;
+  address: string;
+  price: number;
+  telephone: string;
+  id: string;
+}
+
 const page = () => {
   const { data: session } = useSession();
   const router = useRouter();
@@ -44,24 +64,26 @@ const page = () => {
   const { toast } = useToast();
 
   const reservationReducer = (
-    state: Array<object>,
-    action: { type: string; payload: object }
+    state: Array<ReservationItem>,
+    action: { type: string; payload: Array<ReservationItem> }
   ) => {
     switch (action.type) {
       case "ADD":
-        const newState = new Array();
-        action.payload.forEach((item) => {
+        const newState = new Array<ReservationItem>();
+        action.payload.forEach((item: ReservationItem) => {
           newState.push(item);
         });
         return newState;
       case "REMOVE":
-        return state.filter((item) => item._id !== action.payload.id);
+        return state.filter(
+          (item: ReservationItem) => item._id !== action.payload[0]._id
+        );
       default:
         return state;
     }
   };
 
-  const [userReservatonState, userReservationDispatch] = useReducer(
+  const [userReservationState, userReservationDispatch] = useReducer(
     reservationReducer,
     []
   );
@@ -86,28 +108,53 @@ const page = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  console.log(userReservatonState);
+  console.log(userReservationState);
   return (
     <main>
-      <NavBar stickyState={isSticky} showSignIn={false} />
+      <NavBar
+        stickyState={isSticky}
+        showSignIn={false}
+        session={session ? true : false}
+      />
       <div className="flex flex-col items-center ">
         <div className=" rounded-xl w-[90vw] h-[80vh] flex flex-col justify-start space-y-4 items-center">
           <div className="w-full flex flex-row justify-end py-1 text-black text-2xl font-kiona relative">
             <h1 className="bg-white rounded-lg px-4 absolute top-[-40px] z-20">
-              {`${userReservatonState.length}/3`}
+              {`${userReservationState.length}/3`}
             </h1>
           </div>
-          {userReservatonState.map((item) => (
+          {userReservationState.map((item) => (
             <ManageCard
               id={item._id}
               name={item.carProvider.name}
               rentDate={new Date(item.rentDate)}
               returnDate={new Date(item.rentTo)}
-              onRemove={(id) => {
-                userReservationDispatch({ type: "REMOVE", payload: { id } });
+              onRemove={(_id: any) => {
+                userReservationDispatch({
+                  type: "REMOVE",
+                  payload: [
+                    {
+                      _id,
+                      rentDate: "",
+                      rentTo: "",
+                      user: "",
+                      carProvider: {
+                        _id: "",
+                        name: "",
+                        address: "",
+                        price: 0,
+                        telephone: "",
+                        id: "",
+                      },
+                      createAt: "",
+                      returned: false,
+                      __v: 0,
+                    },
+                  ],
+                });
               }}
-              deleteReservation={(id, token) =>
-                deleteReservation(id, token).then(
+              deleteReservation={(_id: any, token: string) =>
+                deleteReservation(_id, token).then(() =>
                   toast({
                     title: "Reservation Deleted",
                     description: "Your reservation has been deleted",
@@ -118,7 +165,7 @@ const page = () => {
               carId={item.carProvider._id}
             />
           ))}
-          {userReservatonState.length < 3 ? (
+          {userReservationState.length < 3 ? (
             <div className="w-full h-[31%] bg-[#3c4047] flex flex-col items-center justify-center">
               <div
                 className="w-fit h-fit flex flex-col items-center hover:scale-105 transition duration-150 ease-in-out active:scale-100"

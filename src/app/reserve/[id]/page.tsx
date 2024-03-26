@@ -96,12 +96,14 @@ const page = ({ params }: { params: { id: string } }) => {
         toast({
           title: "Reservation created",
           description: "Your reservation has been created",
+          duration: 3000,
         });
       })
       .catch(() => {
         toast({
           title: "Failed to create reservation",
           description: "Failed to create reservation",
+          duration: 3000,
         });
       });
   }
@@ -118,7 +120,14 @@ const page = ({ params }: { params: { id: string } }) => {
         <div className="bg-[#17191C] rounded-xl w-[90vw] h-[72vh] flex flex-row justify-evenly items-center">
           <div className=" w-[25%] h-[100%] flex flex-col relative justify-center items-center">
             <div className=" w-full h-[80%]  flex flex-col relative">
-              <ExploreCard src={carData?.src} {...carData} />
+              <ExploreCard
+                src={carData?.src ?? ""}
+                _id={carData?._id ?? ""}
+                address={carData?.address ?? ""}
+                name={carData?.name ?? ""}
+                telephone={carData?.telephone ?? ""}
+                price={carData?.price ?? 0}
+              />
             </div>
           </div>
           <div className="bg-white rounded-xl w-[3px] h-[85%]"></div>

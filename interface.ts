@@ -4,6 +4,7 @@ interface CarItem {
   address: string;
   telephone: string;
   price: number;
+  src?: string;
 }
 
 interface CarJson {
@@ -14,20 +15,20 @@ interface CarJson {
 
 type CarJsonPromise = Promise<CarJson>;
 
-type CarProps = {
-  _id: string;
-  src: string;
-  name: string;
-  telephone: string;
-  price: number;
-  address: string;
-};
-
-type createUserProps = {
+interface CreateUserProps {
   userName: string;
   userEmail: string;
   userPassword: string;
   userPhone: string;
   userLocation: string;
-  balance: number;
-};
+  balance?: number;
+}
+
+interface CarProps {
+  _id: string;
+  src?: string;
+  name: string;
+  telephone: string;
+  price: number;
+  address: string;
+}
