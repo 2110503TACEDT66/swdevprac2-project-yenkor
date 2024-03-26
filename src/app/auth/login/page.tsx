@@ -60,7 +60,7 @@ export default function LoginPage({errorMessage} : {errorMessage: string}) {
     // }
 
     return (
-        <main className="m-[100px]">
+        <main className="px-[100px]">
             <NavBar stickyState={false}/>
             <div className="text-white p-20 bg-black h-[80vh] flex flex-row items-center">
                 <div className="w-1/2 text-center space-y-3 flex flex-col items-start p-[100px]">
