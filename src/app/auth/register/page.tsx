@@ -72,7 +72,7 @@ export default function RegisterPage() {
 
     return (
         <main className="px-[100px]">
-            <NavBar stickyState={false}/>
+            <NavBar stickyState={false} topRight={null}/>
             <div className="text-white p-20 bg-black h-[80vh] flex flex-row items-center">
                 <div className="w-1/2 text-center space-y-3 flex flex-col items-start p-[100px]">
                     <div>
@@ -83,7 +83,7 @@ export default function RegisterPage() {
                         <p className="bg-gradient-to-r from-pink-400 to-indigo-600 bg-clip-text text-transparent">GO TO LOG-IN</p>
                     </div>
                 </div>
-                <div className="w-1/2 h-full text-white flex flex-col gap-10 items-start justify-end p-20 ">
+                <div className="w-1/2 text-white flex flex-col gap-10 items-start justify-end p-20 border-l-2 border-l-white">
                     <div>
                         <label htmlFor="name" className="block text-gray-300">NAME</label>
                         <input id="name" type="text" value={name}
