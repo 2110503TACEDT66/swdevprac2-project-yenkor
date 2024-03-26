@@ -3,10 +3,15 @@ import { getServerSession } from "next-auth";
 import React from "react";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import getMe from "@/lib/getMe";
+import { redirect } from "next/navigation";
 
 const page = async () => {
   const session = await getServerSession(authOptions);
   console.log(`server-session: ${session?.user.name}`);
+
+  if (!session || !session.user.token) {
+    redirect("/sign-in");
+  }
 
   const profile = await getMe(session?.user.token);
   console.log(profile);
