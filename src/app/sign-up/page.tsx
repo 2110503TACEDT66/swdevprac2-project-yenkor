@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import createUser from "@/lib/createUser";
+import { signIn } from "next-auth/react";
 
 const page = () => {
   const [isSticky, setIsSticky] = useState(false);
@@ -39,6 +41,9 @@ const page = () => {
   }, []);
 
   const formSchema = z.object({
+    name: z.string().min(2, {
+      message: "name must be at least 2 characters.",
+    }),
     email: z.string().min(2, {
       message: "email must be at least 2 characters.",
     }),
@@ -63,6 +68,7 @@ const page = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
       phone: "",
@@ -72,14 +78,29 @@ const page = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    createUser({
+      userName: values.name,
+      userEmail: values.email,
+      userPassword: values.password,
+      userPhone: values.phone,
+      userLocation: values.location,
+    })
+      .then((data) => {
+        console.log(data);
+        signIn("credentials", {
+          email: values.email,
+          password: values.password,
+          callbackUrl: "/",
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   return (
     <main>
-      <NavBar stickyState={isSticky} showSignIn={false} />;
+      <NavBar stickyState={isSticky} showSignIn={false} session={false} />;
       <div className="flex flex-col items-center">
         <div className="bg-[#17191C] rounded-xl w-[90vw] h-[72vh] flex flex-row justify-around items-center">
           <div className=" w-[45%] h-[100%] flex flex-col relative justify-center">
@@ -107,8 +128,27 @@ const page = () => {
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-8"
+                  className="space-y-4"
                 >
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-white font-kiona text-lg">
+                          Name
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            className="bg-[#222529] text-white"
+                            placeholder="Your Name"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-rose-600" />
+                      </FormItem>
+                    )}
+                  />
                   <FormField
                     control={form.control}
                     name="email"

@@ -21,13 +21,27 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
+import { useSession } from "next-auth/react";
+import getAllCarProviders from "@/lib/getAllCarProviders";
+import getSingleCarProvider from "@/lib/getSingleCarProvider";
+import { useRouter } from "next/navigation";
+import createReservation from "@/lib/createReservation";
+import { useToast } from "@/components/ui/use-toast";
 
 const page = ({ params }: { params: { id: string } }) => {
+  const router = useRouter();
+  const { data: session } = useSession();
+  console.log(session);
+  console.log(session?.user.token);
+  console.log(session?.user._id);
   const [isSticky, setIsSticky] = useState(false);
+  const [carData, setCarData] = useState<CarItem>();
+  const [userProfile, setUserProfile] = useState();
+  const { toast } = useToast();
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -38,17 +52,21 @@ const page = ({ params }: { params: { id: string } }) => {
       }
     };
 
+    const fetchData = async () => {
+      const carJson = await getSingleCarProvider(params.id);
+      setCarData(carJson.data);
+    };
+    fetchData();
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
-  const mockData = new Map();
-  mockData.set("1", {
-    name: "Lamborghini",
-    location: "Bangkok 10400",
-    phone: "0987654321",
-  });
+  }, [carData]);
+
+  if (!session || !session.user.token) {
+    router.push("/sign-in");
+    return null;
+  }
 
   const formSchema = z.object({
     rentDate: z.date({
@@ -67,19 +85,40 @@ const page = ({ params }: { params: { id: string } }) => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    createReservation(
+      params.id,
+      values.returnDate,
+      values.rentDate,
+      session?.user?._id ?? "",
+      session?.user?.token ?? ""
+    )
+      .then(() => {
+        toast({
+          title: "Reservation created",
+          description: "Your reservation has been created",
+        });
+      })
+      .catch(() => {
+        toast({
+          title: "Failed to create reservation",
+          description: "Failed to create reservation",
+        });
+      });
   }
 
   return (
     <main>
-      <NavBar stickyState={isSticky} showSignIn={false} />;
+      <NavBar
+        stickyState={false}
+        showSignIn={false}
+        session={session ? true : false}
+      />
+      ;
       <div className="flex flex-col items-center">
         <div className="bg-[#17191C] rounded-xl w-[90vw] h-[72vh] flex flex-row justify-evenly items-center">
           <div className=" w-[25%] h-[100%] flex flex-col relative justify-center items-center">
             <div className=" w-full h-[80%]  flex flex-col relative">
-              <ExploreCard />
+              <ExploreCard src={carData?.src} {...carData} />
             </div>
           </div>
           <div className="bg-white rounded-xl w-[3px] h-[85%]"></div>
@@ -88,19 +127,19 @@ const page = ({ params }: { params: { id: string } }) => {
             <div className=" w-fit h-fit flex flex-col space-y-3 pt-9 pl-6">
               <h1 className="text-2xl font-kiona text-white">Name</h1>
               <h1 className="text-5xl font-poppins text-white">
-                {mockData.get(params.id).name}
+                {carData?.name ?? ""}
               </h1>
             </div>
             <div className=" w-fit h-fit flex flex-col space-y-3 pt-9 pl-6">
               <h1 className="text-2xl font-kiona text-white">Location</h1>
               <h1 className="text-4xl font-poppins text-white">
-                {mockData.get(params.id).location}
+                {carData?.address ?? ""}
               </h1>
             </div>
             <div className=" w-fit h-fit flex flex-col space-y-3 pt-9 pl-6">
               <h1 className="text-2xl font-kiona text-white">Phone</h1>
               <h1 className="text-4xl font-poppins text-white">
-                {mockData.get(params.id).phone}
+                {carData?.telephone ?? ""}
               </h1>
             </div>
 

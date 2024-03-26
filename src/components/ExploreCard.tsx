@@ -1,7 +1,15 @@
+"ues client";
 import Image from "next/image";
 import React from "react";
 
-const ExploreCard = ({ src, name, telephone, address, price }: CarProps) => {
+const ExploreCard = ({
+  _id,
+  src,
+  name,
+  telephone,
+  address,
+  price,
+}: CarProps) => {
   return (
     <div className="w-full h-full">
       <div className="w-full h-[75%] relative">

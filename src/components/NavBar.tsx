@@ -96,7 +96,13 @@ const NavBar = ({
                 />
               </PopoverTrigger>
               <PopoverContent className="bg-white w-36 p-3 mr-3 mt-3 flex flex-col space-y-4">
-                <button>Profile</button>
+                <button
+                  onClick={() => {
+                    router.push("/profile");
+                  }}
+                >
+                  Profile
+                </button>
                 <button
                   onClick={() => {
                     signOut();
