@@ -98,6 +98,7 @@ const page = ({ params }: { params: { id: string } }) => {
           description: "Your reservation has been created",
           duration: 3000,
         });
+        router.push("/manage");
       })
       .catch(() => {
         toast({

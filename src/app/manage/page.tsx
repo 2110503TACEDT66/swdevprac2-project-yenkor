@@ -41,7 +41,7 @@ interface ReservationItem {
   _id: string;
   rentDate: string;
   rentTo: string;
-  user: string;
+  user: User;
   carProvider: CarProvider;
   createAt: string;
   returned: boolean;
@@ -55,13 +55,25 @@ interface CarProvider {
   price: number;
   telephone: string;
   id: string;
+  src: string;
+}
+
+interface User {
+  _id: string;
+  name: string;
+  email: string;
 }
 
 const page = () => {
   const { data: session } = useSession();
+
   const router = useRouter();
   const [isSticky, setIsSticky] = useState(false);
   const { toast } = useToast();
+
+  if (!session) {
+    router.push("/sign-in");
+  }
 
   const reservationReducer = (
     state: Array<ReservationItem>,
@@ -108,6 +120,9 @@ const page = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const isAdmin = session?.user.role === "admin";
+  console.log(isAdmin);
   console.log(userReservationState);
   return (
     <main>
@@ -125,6 +140,7 @@ const page = () => {
           </div>
           {userReservationState.map((item) => (
             <ManageCard
+              src={item.carProvider.src}
               id={item._id}
               name={item.carProvider.name}
               rentDate={new Date(item.rentDate)}
@@ -137,7 +153,11 @@ const page = () => {
                       _id,
                       rentDate: "",
                       rentTo: "",
-                      user: "",
+                      user: {
+                        _id: "",
+                        name: "",
+                        email: "",
+                      },
                       carProvider: {
                         _id: "",
                         name: "",
@@ -145,6 +165,7 @@ const page = () => {
                         price: 0,
                         telephone: "",
                         id: "",
+                        src: "",
                       },
                       createAt: "",
                       returned: false,
@@ -163,6 +184,8 @@ const page = () => {
                 )
               }
               carId={item.carProvider._id}
+              adminView={isAdmin}
+              userName={item.user.name}
             />
           ))}
           {userReservationState.length < 3 ? (

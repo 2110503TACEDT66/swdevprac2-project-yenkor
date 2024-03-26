@@ -1,15 +1,13 @@
 "use client";
-
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import HomeCard from "@/components/HomeCard";
 import NavBar from "@/components/NavBar";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
 
 export default function Home() {
+  const router = useRouter();
   const [isSticky, setIsSticky] = useState(false);
   const [isFirst, setIsFirst] = useState(true);
   const { data: session } = useSession();
@@ -101,7 +99,6 @@ export default function Home() {
                 session? <div className="text-white">Hello {session.data?.user.name}</div> : <div className="text-white">Not loged in</div>
               } */}
             </div>
-            
           </div>
 
           <div className="flex flex-row space-x-4">
@@ -117,16 +114,29 @@ export default function Home() {
         </h1>
         <div className="flex flex-row p-16 space-x-8">
           <HomeCard
+            onClick={() => {
+              router.push("/explore");
+            }}
             src="/img/menu_1.jpg"
             alt="Select Your Car"
             text="Select Your Car"
           />
           <HomeCard
+            onClick={() => {
+              if (session) {
+                router.push("/explore");
+              } else {
+                router.push("/sign-up");
+              }
+            }}
             src="/img/menu_2.jpg"
             alt="Rental Car Provider"
-            text="Our Trusted Partner"
+            text="Start Your Journey Now"
           />
           <HomeCard
+            onClick={() => {
+              router.push("/manage");
+            }}
             src="/img/menu_3.jpg"
             alt="Reservation"
             text="Reservation"
