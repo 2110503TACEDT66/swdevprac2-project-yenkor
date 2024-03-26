@@ -10,6 +10,7 @@ import { signIn } from "next-auth/react";
 import { ChangeEvent } from "react";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default function LoginPage({errorMessage} : {errorMessage: string}) {
 
@@ -61,7 +62,7 @@ export default function LoginPage({errorMessage} : {errorMessage: string}) {
 
     return (
         <main className="px-[100px]">
-            <NavBar stickyState={false} topRight={null}/>
+            {/* <NavBar stickyState={false} topRight={null}/> */}
             <div className="text-white p-20 bg-black h-[80vh] flex flex-row items-center">
                 <div className="w-1/2 text-center space-y-3 flex flex-col items-start p-[100px]">
                     <div>
@@ -69,7 +70,10 @@ export default function LoginPage({errorMessage} : {errorMessage: string}) {
                     </div>
                     <div className="flex gap-3">
                         <p>DOESN'T HAVE ONE?</p>
-                        <p className="bg-gradient-to-r from-pink-400 to-indigo-600 bg-clip-text text-transparent">GO TO SIGN-UP</p>
+                        <Link href={"/auth/register"} className="bg-gradient-to-r from-pink-400 to-indigo-600 bg-clip-text text-transparent
+                        hover:transition duration-300 ease-in-out hover:scale-105 active:scale-95 active:shadow-inner"
+                        >GO TO SIGN-UP
+                        </Link>
                     </div>
                 </div>
                 <div className="w-1/2 h-full text-white flex flex-col gap-10 items-start justify-end p-20 border-l-2 border-l-white">
