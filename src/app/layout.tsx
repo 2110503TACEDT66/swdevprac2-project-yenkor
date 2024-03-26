@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import NextAuthProvider from "@/providers/NextAuthProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
-import NavBar from "@/components/NavBar";
+import NextAuthProvider from "@/providers/NextAuthProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,17 +18,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   const nextAuthSession = await getServerSession(authOptions);
-
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <NextAuthProvider session={nextAuthSession}>
-          {/* <NavBar stickyState={false}/> */}
-          {children}
-        </NextAuthProvider>  
-      </body>
+      <NextAuthProvider session={nextAuthSession}>
+        <body className={inter.className}>{children}</body>
+        <Toaster />
+      </NextAuthProvider>
     </html>
   );
 }

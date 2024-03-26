@@ -1,7 +1,9 @@
 "use client";
 
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import HomeCard from "@/components/HomeCard";
 import NavBar from "@/components/NavBar";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -10,14 +12,13 @@ import Link from "next/link";
 export default function Home() {
   const [isSticky, setIsSticky] = useState(false);
   const [isFirst, setIsFirst] = useState(true);
-  const session = useSession();
-
-  // if (session) console.log(session);
+  const { data: session } = useSession();
+  console.log(session);
 
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      if (offset > 0) {
+      if (offset > 100) {
         setIsSticky(true);
       } else {
         setIsSticky(false);
@@ -35,22 +36,11 @@ export default function Home() {
 
   return (
     <main className="h-[200vh]">
-      <NavBar stickyState={isSticky} topRight={ // Send Top Right Item on NavBar (In This case is Sign in Button)
-          <button
-            className={`px-6 py-2 rounded-md font-bold shadow-lg
-            ${
-              isSticky
-                ? "bg-gray-900 text-white hover:bg-gray-600 transition duration-300 ease-in-out hover:scale-105 active:bg-gray-600 active:scale-95 active:shadow-inner"
-                : "bg-white text-black hover:bg-gray-300 hover:scale-105 transition duration-300 ease-in-out active:bg-gray-300 active:scale-95 active:shadow-inner"
-            }
-            
-            `}
-            >{ // If User logged in Show Sign out Button, Otherwise Show Sign in
-              session.status == "authenticated" ? <Link href={"/api/auth/signout"}>Sign out</Link>
-              : <Link href={"auth/login"}>Sign in</Link>
-            }
-          </button>
-      }/>
+      <NavBar
+        stickyState={isSticky}
+        showSignIn={session ? false : true}
+        session={session ? true : false}
+      />
 
       {/* Background */}
       <div className="overflow-hidden">

@@ -1,10 +1,22 @@
-'use client'
-import Image from "next/image";
-import React, { useState } from "react";
-import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
 
-const NavBar = ({ stickyState, topRight }: { stickyState: boolean, topRight: React.ReactNode }) => {
+"use client";
+
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { signOut } from "next-auth/react";
+
+const NavBar = ({
+  stickyState,
+  showSignIn,
+  session,
+}: {
+  stickyState: boolean;
+  showSignIn: boolean;
+  session: boolean;
+}) => {
+  const router = useRouter();
   const isSticky = stickyState;
 
        
@@ -38,6 +50,7 @@ const NavBar = ({ stickyState, topRight }: { stickyState: boolean, topRight: Rea
 
           <div className="flex flex-row space-x-8 ml-12">
             <button
+              onClick={() => router.push("/")}
               className={`font-normal text-xl hover:font-bold hover:scale-105 transition duration-300 ease-in-out active:font-normal ${
                 isSticky ? "text-black  " : "text-white"
               }`}
@@ -45,46 +58,73 @@ const NavBar = ({ stickyState, topRight }: { stickyState: boolean, topRight: Rea
               Home
             </button>
             <button
+              onClick={() => router.push("/explore")}
+              className={`font-normal text-xl hover:font-bold hover:scale-105 transition duration-300 ease-in-out active:font-normal ${
+                isSticky ? "text-black  " : "text-white"
+              }`}
+            >
+              Explore
+            </button>
+            <button
+              onClick={() => router.push("/manage")}
               className={`font-normal text-xl hover:font-bold hover:scale-105 transition duration-300 ease-in-out active:font-normal ${
                 isSticky ? "text-black  " : "text-white"
               }`}
             >
               Reservation
             </button>
-            <button
-              className={`font-normal text-xl hover:font-bold active:font-normal ${
-                isSticky ? "text-black  " : "text-white"
-              }`}
-            ></button>
           </div>
         </div>
          {/* // To make NavBar Reusable Component */}
         <div className="flex flex-row space-x-4">
-          {topRight}
-        </div>
-
-  
-        
-        {/* <div className="flex flex-row space-x-4">
-          <button
-            className={`px-6 py-2 rounded-md font-bold shadow-lg
+          {showSignIn ? (
+            <button
+              onClick={() => router.push("/sign-in")}
+              className={`px-6 py-2 rounded-md font-bold shadow-lg
             ${
               isSticky
                 ? "bg-gray-900 text-white hover:bg-gray-600 transition duration-300 ease-in-out hover:scale-105 active:bg-gray-600 active:scale-95 active:shadow-inner"
                 : "bg-white text-black hover:bg-gray-300 hover:scale-105 transition duration-300 ease-in-out active:bg-gray-300 active:scale-95 active:shadow-inner"
-            }
-            
-                      `}
-            // "bg-white px-6 py-2 rounded-md font-bold shadow-lg
-            //   hover:bg-[#F2F2F2] transition duration-300 ease-in-out
-            //   active:bg-[#F2F2F2] active:scale-95 active:shadow-inner"
-          >{ 
-            session? <Link href={"/api/auth/signout"}>Sign out</Link>
-            : <Link href={"auth/login"}>Sign in</Link>
-          }
-            
-          </button>
-        </div> */}
+            }`}
+            >
+              Sign in
+            </button>
+          ) : (
+            ""
+          )}
+
+          {session ? (
+            <Popover>
+              <PopoverTrigger>
+                <Image
+                  alt="profile"
+                  src="/img/profile.png"
+                  width={30}
+                  height={30}
+                  className="z-50 hover:scale-110 transition duration-300 ease-in-out"
+                />
+              </PopoverTrigger>
+              <PopoverContent className="bg-white w-36 p-3 mr-3 mt-3 flex flex-col space-y-4">
+                <button
+                  onClick={() => {
+                    router.push("/profile");
+                  }}
+                >
+                  Profile
+                </button>
+                <button
+                  onClick={() => {
+                    signOut();
+                  }}
+                >
+                  Sign-out
+                </button>
+              </PopoverContent>
+            </Popover>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </div>
   );
